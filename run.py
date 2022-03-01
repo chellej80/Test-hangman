@@ -1,14 +1,8 @@
 import random
 import time
 
-easy = ['pear', 'mango', 'apple']
-hard = ['hawkeye', 'robin']
-guesslist = []
-guesses = []
-playGame = True
-category = ""
-continueGame = "Y"
-
+print("Welcome to hangman")
+print("-------------------------------------------")
 name = input("Enter your name \n")
 print("Hello", name.capitalize(), "let's start playing Hangman!")
 time.sleep(1)
@@ -18,83 +12,104 @@ print("Don't forget to press 'enter key' after each guess.")
 time.sleep(2)
 print("Let the fun begin!")
 time.sleep(1)
+wordDictionary = ["sunflower", "house", "diamond", "memes","yeet","hello", "howdy", "like", "subscribe"]
 
-while True:
-    # Choosing the Secret word
-    while True:
-        if category.upper() == 'E':
-            secretWord = random.choice(easy)
-            break
-        elif category.upper() == 'H':
-            secretWord = random.choice(hard)
-            break
-        else:
-            category = input("E for Easy / H for Hard; X to exit \n")
+### Choose a random word
+randomWord = random.choice(wordDictionary)
 
-        if category.upper() == 'X':
-            print("Bye. See you next time!")
-            playGame = False
-            break
+for x in randomWord:
+  print("_", end=" ")
 
-    if playGame:
-        secretWordList = list(secretWord)
-        attempts = (len(secretWord) + 2)
+def print_hangman(wrong):
+  if(wrong == 0):
+    print("\n+---+")
+    print("    |")
+    print("    |")
+    print("    |")
+    print("   ===")
+  elif(wrong == 1): 
+    print("\n+---+")
+    print("O   |")
+    print("    |")
+    print("    |")
+    print("   ===")
+  elif(wrong == 2):
+    print("\n+---+")
+    print("O   |")
+    print("|   |")
+    print("    |")
+    print("   ===")
+  elif(wrong == 3):
+    print("\n+---+")
+    print(" O  |")
+    print("/|  |")
+    print("    |")
+    print("   ===")
+  elif(wrong == 4):
+    print("\n+---+")
+    print(" O  |")
+    print("/|\ |")
+    print("    |")
+    print("   ===")
+  elif(wrong == 5):
+    print("\n+---+")
+    print(" O  |")
+    print("/|\ |")
+    print("/   |")
+    print("   ===")
+  elif(wrong == 6):
+    print("\n+---+")
+    print(" O   |")
+    print("/|\  |")
+    print("/ \  |")
+    print("    ===")
 
-        # Utility function to print User Guess List
-        def printGuessedLetter():
-            print("Your Secret word is: " + ''.join(guesslist))
-        # Adding blank lines to userGuesslist to create the blank secret word
-        for n in secretWordList:
-            guesslist.append('_')
-        printGuessedLetter()
-
-        print("The number of allowed guesses for this word is:", attempts)
-        # starting the game
-        while True:
-
-            print("Guess a letter:")
-            letter = input()
-
-            if letter in guesses:
-                print("You already guessed this letter, try something else.")
-
-            else:
-                attempts -= 1
-                guesses.append(letter)
-                if letter in secretWordList:
-                    print("Nice guess!")
-                    if attempts > 0:
-                        print("You have ", attempts, 'guess left!')
-                    for i in range(len(secretWordList)):
-                        if letter == secretWordList[i]:
-                            letterIndex = i
-                            guesslist[letterIndex] = letter.upper()
-                    printGuessedLetter()
-
-                else:
-                    print("Oops! Try again.")
-                    if attempts > 0:
-                        print("You have ", attempts, 'guess left!')
-                    printGuessedLetter()
-            # Win/loss logic for the game
-            joinedList = ''.join(guesslist)
-            if joinedList.upper() == secretWord.upper():
-                print("Yay! you won.")
-                break
-            elif attempts == 0:
-                print("Too many Guesses!, Sorry better luck next time.")
-                print("The secret word was: " + secretWord.upper())
-                break
-
-        # Play again logic for the game
-        continueGame = input("Do you want to play again? Y to continue \n")
-        if continueGame.upper() == 'Y':
-            category = input("E for Easy / H for Hard")
-            guesslist = []
-            guesses = []
-            playGame = True
-        else:
-            print("Thank You for playing. See you next time!")
-            break
+def printWord(guessedLetters):
+  counter=0
+  rightLetters=0
+  for char in randomWord:
+    if(char in guessedLetters):
+      print(randomWord[counter], end=" ")
+      rightLetters+=1
     else:
-        break
+      print(" ", end=" ")
+    counter+=1
+  return rightLetters
+
+def printLines():
+  print("\r")
+  for char in randomWord:
+    print("\u203E", end=" ")
+
+length_of_word_to_guess = len(randomWord)
+amount_of_times_wrong = 0
+current_guess_index = 0
+current_letters_guessed = []
+current_letters_right = 0
+
+while(amount_of_times_wrong != 6 and current_letters_right != length_of_word_to_guess):
+  print("\nLetters guessed so far: ")
+  for letter in current_letters_guessed:
+    print(letter, end=" ")
+  ### Prompt user for input
+  letterGuessed = input("\nGuess a letter: ")
+  ### User is right
+  if(randomWord[current_guess_index] == letterGuessed):
+    print_hangman(amount_of_times_wrong)
+    ### Print word
+    current_guess_index+=1
+    current_letters_guessed.append(letterGuessed)
+    current_letters_right = printWord(current_letters_guessed)
+    printLines()
+  ### User was wrong af
+  else:
+    amount_of_times_wrong += 1
+    current_letters_guessed.append(letterGuessed)
+    print(f"oops wrong guess, try again")
+    ### Update the drawing
+    print_hangman(amount_of_times_wrong)
+    ### Print word
+    current_letters_right = printWord(current_letters_guessed)
+    printLines()
+
+print("Game is over! Thank you for playing :)")
