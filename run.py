@@ -1,115 +1,172 @@
 import random
 import time
 
-print("Welcome to hangman")
-print("-------------------------------------------")
-name = input("Enter your name \n")
-print("Hello", name.capitalize(), "let's start playing Hangman!")
-time.sleep(1)
-print("The objective of the game is to guess")
-time.sleep(1)
-print("Don't forget to press 'enter key' after each guess.")
-time.sleep(2)
-print("Let the fun begin!")
-time.sleep(1)
-wordDictionary = ["sunflower", "house", "diamond", "memes","yeet","hello", "howdy", "like", "subscribe"]
+# Function to hold the Hangman design, passing in wrong as an argument
+def hangman_pic(wrong):
+    if wrong == 0:
+        print("\n+---+")
+        print("    |")
+        print("    |")
+        print("    |")
+        print("   ===")
+    elif wrong == 1:
+        print("\n+---+")
+        print("O   |")
+        print("    |")
+        print("    |")
+        print("   ===")
+    elif wrong == 2:
+        print("\n+---+")
+        print("O   |")
+        print("|   |")
+        print("    |")
+        print("   ===")
+    elif wrong == 3:
+        print("\n+---+")
+        print(" O  |")
+        print("/|  |")
+        print("    |")
+        print("   ===")
+    elif wrong == 4:
+        print("\n+---+")
+        print(" O  |")
+        print("/|\ |")
+        print("    |")
+        print("   ===")
+    elif wrong == 5:
+        print("\n+---+")
+        print(" O  |")
+        print("/|\ |")
+        print("/   |")
+        print("   ===")
+    elif wrong == 6:
+        print("\n+---+")
+        print(" O   |")
+        print("/|\  |")
+        print("/ \  |")
+        print("    ===")
 
-### Choose a random word
-randomWord = random.choice(wordDictionary)
 
-for x in randomWord:
-  print("_", end=" ")
-
-def print_hangman(wrong):
-  if(wrong == 0):
-    print("\n+---+")
-    print("    |")
-    print("    |")
-    print("    |")
-    print("   ===")
-  elif(wrong == 1): 
-    print("\n+---+")
-    print("O   |")
-    print("    |")
-    print("    |")
-    print("   ===")
-  elif(wrong == 2):
-    print("\n+---+")
-    print("O   |")
-    print("|   |")
-    print("    |")
-    print("   ===")
-  elif(wrong == 3):
-    print("\n+---+")
-    print(" O  |")
-    print("/|  |")
-    print("    |")
-    print("   ===")
-  elif(wrong == 4):
-    print("\n+---+")
-    print(" O  |")
-    print("/|\ |")
-    print("    |")
-    print("   ===")
-  elif(wrong == 5):
-    print("\n+---+")
-    print(" O  |")
-    print("/|\ |")
-    print("/   |")
-    print("   ===")
-  elif(wrong == 6):
-    print("\n+---+")
-    print(" O   |")
-    print("/|\  |")
-    print("/ \  |")
-    print("    ===")
-
-def printWord(guessedLetters):
-  counter=0
-  rightLetters=0
-  for char in randomWord:
-    if(char in guessedLetters):
-      print(randomWord[counter], end=" ")
-      rightLetters+=1
+# Statements welcoming the user and asking for them to input their name
+def greeting():
+    print("-------------------------------------------")
+    print("Welcome to Horsey Hangman")
+    print("-------------------------------------------")
+    name = input("Enter your name: \n")
+    print("-------------------------------------------")
+    # Use a decision making process to accept only alphabets as name
+    if name.isalpha() == True:
+        print("Hello", name.capitalize(), "let's start playing Hangman!")
+        time.sleep(1)
+        print("The objective of the game is to guess the secret word one letter at a time")
+        time.sleep(1)
+        print("Don't forget to press 'enter key' after each guess.")
+        time.sleep(2)
+        print("Let the fun begin!")
+        time.sleep(1)
+                  
     else:
-      print(" ", end=" ")
-    counter+=1
-  return rightLetters
+        print('Please enter your name using letter only: ')
+        name = input("Enter your name: \n")
+        print("Hello", name.capitalize(), "let's start playing Hangman!")
+        time.sleep(1)
+        print("The objective of the game is to guess")
+        time.sleep(1)
+        print("Don't forget to press 'enter key' after each guess.")
+        time.sleep(2)
+        print("Let the fun begin!")
+        time.sleep(1)
 
-def printLines():
-  print("\r")
-  for char in randomWord:
-    print("\u203E", end=" ")
 
-length_of_word_to_guess = len(randomWord)
-amount_of_times_wrong = 0
-current_guess_index = 0
-current_letters_guessed = []
-current_letters_right = 0
+def play_again():
+    
+    """ This function asks user/player if he/she wishes to replay"""
+    response = input("Would you like to play again? yes/no. Enter 'Y' for Yes or 'N' for No: ").lower()
 
-while(amount_of_times_wrong != 6 and current_letters_right != length_of_word_to_guess):
-  print("\nLetters guessed so far: ")
-  for letter in current_letters_guessed:
-    print(letter, end=" ")
-  ### Prompt user for input
-  letterGuessed = input("\nGuess a letter: ")
-  ### User is right
-  if(randomWord[current_guess_index] == letterGuessed):
-    print_hangman(amount_of_times_wrong)
-    ### Print word
-    current_guess_index+=1
-    current_letters_guessed.append(letterGuessed)
-    current_letters_right = printWord(current_letters_guessed)
-    printLines()
-  ### User was wrong af
-  else:
-    amount_of_times_wrong += 1
-    current_letters_guessed.append(letterGuessed)
-    print(f"oops wrong guess, try again")
-    ### Update the drawing
-    print_hangman(amount_of_times_wrong)
-    ### Print word
-    current_letters_right = printWord(current_letters_guessed)
-    printLines()
+    # Create a decision making process
+    if response == 'y':
+        run_game()
+    else:
+        print("Hope you enjoyed the game !. See you next time :)")
 
-print("Game is over! Thank you for playing :)")
+# Define a function for generating random words for the user to guess.
+def select_word():
+    """ This function generates the word the user will attempt guessing"""
+    words = ["Horse", "Pony", "Saddle", "Bridle", "Girth", "Equine"]
+    return random.choice(words).lower()
+
+# Define function to run the gamey
+def run_game():
+    # call the greeting function to get the game running
+    greeting()
+    
+    # Define a variable alpahabet
+    alphabet = ('abcdefghijklmnopqrstuvwxyz')
+    
+    # Set guess word to get_word function for a random word to be generated
+    word = select_word()
+    
+    # Initiate an empty list for guessed letter
+    guessed_letters = []
+    
+    # Initiate a counter for number of tries by the user
+    attempt_counter = 6
+    
+    # Set inital guess to false
+    guessed = False
+     
+    # Print an empty line
+    print()
+
+    # Initate a while loop and create decisions
+    # Also a create decisions for if user inputs a wrong entry
+    # Deduct attempts each user fails to guess incorrectly
+    while guessed == False and attempt_counter > 0:
+        print('You have ' + str(attempt_counter) + ' attempts')
+        guess = input('Guess a letter: ').lower()
+        #user inputs a letter
+        if len(guess) == 1:
+            if guess not in alphabet:
+                print('You are yet to enter a letter. Check your entry, make sure you enter an alphabet not a number')
+            elif guess in guessed_letters:
+                print('You have already guessed that letter before.Try again!')
+            elif guess not in word:
+                print('Sorry, that letter is not part of the word')
+                guessed_letters.append(guess)
+                attempt_counter -=1
+                hangman_pic(attempt_counter)
+            elif guess in word:
+                print('Super that letter is in the word')
+                guessed_letters.append(guess)
+                attempt_counter -=1
+                hangman_pic(attempt_counter)
+        else:
+            print('Please enter only one Letter per try')
+            attempt_counter -=1  
+
+        status = ''
+        if guessed == False:
+            for letter in word:
+                if letter in guessed_letters:
+                    status += letter
+                else:
+                    status += '_'
+            print(status)
+           
+
+        if status == word:
+            print()
+            print('Great Job! You guessed the word correctly!')
+            guessed = True
+            print("-------------------------------------------")
+        elif attempt_counter == 0:
+            print()
+            print("-------------------------------------------")
+            print("Opps! You ran out of guesses, Hard Luck")
+            print("-------------------------------------------")
+
+    #Initiate play_again function if user wishes to continue
+    play_again()
+
+#Full program run
+run_game()
