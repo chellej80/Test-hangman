@@ -138,7 +138,7 @@ def run_game():
             elif guess in word:
                 print('Super that letter is in the word')
                 guessed_letters.append(guess)
-                # attempt_counter -=1
+                # nattempt_counter -=1
                 hangman_pic(attempt_counter)
         else:
             print('Please enter only one Letter per try')
@@ -156,13 +156,13 @@ def run_game():
 
         if status == word:
             print()
-            print('Great Job! You guessed the word correctly!')
             guessed = True
             print("-------------------------------------------")
         elif attempt_counter == 0:
             print()
             print("-------------------------------------------")
-            print("Opps! You ran out of guesses, Hard Luck")
+            print("Opps! You ran out of guesses, Hard Luck !!")
+            print("The correct word was: ", word)
             print("-------------------------------------------")
 
     #Initiate play_again function if user wishes to continue
