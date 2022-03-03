@@ -138,7 +138,7 @@ def run_game():
             elif guess in word:
                 print('Super that letter is in the word')
                 guessed_letters.append(guess)
-                attempt_counter -=1
+                # attempt_counter -=1
                 hangman_pic(attempt_counter)
         else:
             print('Please enter only one Letter per try')
