@@ -143,21 +143,23 @@ def run_game():
         else:
             print('Please enter only one Letter per try')
             attempt_counter -=1  
-
-        status = ''
+        # print letter or dash under hangman pic
+        result = ''
         if guessed == False:
             for letter in word:
                 if letter in guessed_letters:
-                    status += letter
+                    result += letter
                 else:
-                    status += '_'
-            print(status)
+                    result += '_'
+            print(result)
            
 
-        if status == word:
+        if result == word:
             print()
             guessed = True
+            print("Well Done you guessed the right word :)")
             print("-------------------------------------------")
+            
         elif attempt_counter == 0:
             print()
             print("-------------------------------------------")
