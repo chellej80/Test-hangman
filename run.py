@@ -123,7 +123,7 @@ def run_game():
     # Deduct attempts each user fails to guess incorrectly
     while guessed == False and attempt_counter > 0:
         print('You have ' + str(attempt_counter) + ' attempts')
-        guess = input('Guess a letter: ').lower()
+        guess = input('Guess a letter: \n').lower()
         #user inputs a letter
         if len(guess) == 1:
             if guess not in alphabet:
