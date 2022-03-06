@@ -1,5 +1,4 @@
 # Function to hold the Hangman design, passing in wrong as an argument
-
 def hangman_pic(wrong):
     if wrong == 0:
         print("\n+---+")
