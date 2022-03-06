@@ -69,7 +69,7 @@ def run_game():
     # Initate a while loop and create decisions
     # Also a create decisions for if user inputs a wrong entry
     # Deduct attempts each user fails to guess incorrectly
-    while sucessfully_guessed == False and total_attempt_counter > 0:
+    while sucessfully_guessed is not True and total_attempt_counter > 0:
         print('You have ' + str(total_attempt_counter) + ' attempts')
         guessed_letter = input('Guess a letter: \n').lower()
         #user inputs a letter
@@ -94,7 +94,7 @@ def run_game():
             total_attempt_counter -=1  
         # print letter or dash under hangman pic
         result = ''
-        if sucessfully_guessed == False:
+        if sucessfully_guessed is not True:
             for letter in word:
                 if letter in guessed_letters:
                     result += letter
