@@ -114,6 +114,8 @@ def run_game():
     
     # Set inital guess to false
     guessed = False
+
+    wrong = 0
      
     # Print an empty line
     print()
@@ -134,12 +136,13 @@ def run_game():
                 print('Sorry, that letter is not part of the word')
                 guessed_letters.append(guess)
                 attempt_counter -=1
-                hangman_pic(attempt_counter)
+                wrong +=1
+                hangman_pic(wrong)
             elif guess in word:
                 print('Super that letter is in the word')
                 guessed_letters.append(guess)
                 # nattempt_counter -=1
-                hangman_pic(attempt_counter)
+                hangman_pic(wrong)
         else:
             print('Please enter only one Letter per try')
             attempt_counter -=1  
