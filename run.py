@@ -1,50 +1,7 @@
-import random
+# import random
 import time
-
-# Function to hold the Hangman design, passing in wrong as an argument
-def hangman_pic(wrong):
-    if wrong == 0:
-        print("\n+---+")
-        print("    |")
-        print("    |")
-        print("    |")
-        print("   ===")
-    elif wrong == 1:
-        print("\n+---+")
-        print("O   |")
-        print("    |")
-        print("    |")
-        print("   ===")
-    elif wrong == 2:
-        print("\n+---+")
-        print("O   |")
-        print("|   |")
-        print("    |")
-        print("   ===")
-    elif wrong == 3:
-        print("\n+---+")
-        print(" O  |")
-        print("/|  |")
-        print("    |")
-        print("   ===")
-    elif wrong == 4:
-        print("\n+---+")
-        print(" O  |")
-        print("/|\ |")
-        print("    |")
-        print("   ===")
-    elif wrong == 5:
-        print("\n+---+")
-        print(" O  |")
-        print("/|\ |")
-        print("/   |")
-        print("   ===")
-    elif wrong == 6:
-        print("\n+---+")
-        print(" O   |")
-        print("/|\  |")
-        print("/ \  |")
-        print("    ===")
+from words import select_word
+from hang_man_pics import hangman_pic
 
 
 # Statements welcoming the user and asking for them to input their name
@@ -88,12 +45,6 @@ def play_again():
         run_game()
     else:
         print("Hope you enjoyed the game !. See you next time :)")
-
-# Define a function for generating random words for the user to guess.
-def select_word():
-    """ This function generates the word the user will attempt guessing"""
-    words = ["Horse", "Pony", "Saddle", "Bridle", "Girth", "Equine"]
-    return random.choice(words).lower()
 
 # Define function to run the gamey
 def run_game():
